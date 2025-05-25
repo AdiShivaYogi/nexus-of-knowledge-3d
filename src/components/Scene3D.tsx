@@ -4,7 +4,11 @@ import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls } from '@react-three/drei';
 import NexusHub from './NexusHub';
 
-const Scene3D: React.FC = () => {
+interface Scene3DProps {
+  onPortalClick?: (portalType: string) => void;
+}
+
+const Scene3D: React.FC<Scene3DProps> = ({ onPortalClick }) => {
   return (
     <div className="fixed inset-0 w-full h-full">
       <Canvas
@@ -22,7 +26,7 @@ const Scene3D: React.FC = () => {
             shadow-mapSize={[2048, 2048]}
           />
           
-          <NexusHub />
+          <NexusHub onPortalClick={onPortalClick} />
           
           <OrbitControls
             enablePan={true}

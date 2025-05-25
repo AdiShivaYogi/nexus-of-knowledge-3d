@@ -26,6 +26,7 @@ const Index = () => {
     
     switch (portalType) {
       case 'altarulcautarii':
+      case 'search':
         setActivePanel('search');
         break;
       case 'literaturaclasica':
@@ -54,7 +55,7 @@ const Index = () => {
       
       {!isLoading && (
         <>
-          <Scene3D />
+          <Scene3D onPortalClick={handlePortalClick} />
           <UIOverlay 
             activePanel={activePanel} 
             onPanelChange={handlePanelChange}
