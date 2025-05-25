@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text, Box, Sphere, Cylinder } from '@react-three/drei';
-import { Mesh } from 'three';
+import { Mesh, Vector3 } from 'three';
 
 interface NexusHubProps {
   onPortalClick?: (portalType: string) => void;
@@ -33,6 +33,14 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
     console.log(`Portal clicked: ${portalType}`);
     onPortalClick?.(portalType);
   };
+
+  // Define portal configurations with proper Vector3 positions
+  const portals = [
+    { name: "Literatură\nClasică", position: new Vector3(-6, 2, -6), color: "#ef4444" },
+    { name: "Știință &\nTehnologie", position: new Vector3(6, 2, -6), color: "#06b6d4" },
+    { name: "Istorie &\nFilozofie", position: new Vector3(-6, 2, 6), color: "#84cc16" },
+    { name: "Colecția\nFavorite", position: new Vector3(6, 2, 6), color: "#f59e0b" }
+  ];
 
   return (
     <group>
@@ -69,12 +77,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
       </Text>
 
       {/* Collection Portals */}
-      {[
-        { name: "Literatură\nClasică", position: [-6, 2, -6] as [number, number, number], color: "#ef4444" },
-        { name: "Știință &\nTehnologie", position: [6, 2, -6] as [number, number, number], color: "#06b6d4" },
-        { name: "Istorie &\nFilozofie", position: [-6, 2, 6] as [number, number, number], color: "#84cc16" },
-        { name: "Colecția\nFavorite", position: [6, 2, 6] as [number, number, number], color: "#f59e0b" }
-      ].map((portal, index) => (
+      {portals.map((portal, index) => (
         <group key={portal.name} position={portal.position}>
           <Box 
             ref={(el) => {
@@ -114,7 +117,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
             (Math.random() - 0.5) * 25,
             Math.random() * 8 + 2,
             (Math.random() - 0.5) * 25
-          ] as [number, number, number]}
+          ]}
         >
           <meshStandardMaterial 
             color="#8b5cf6" 
