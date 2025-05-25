@@ -10,7 +10,7 @@ interface NexusHubProps {
 
 const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
   const centerOrbRef = useRef<Mesh>(null);
-  const portalRefs = useRef<(Mesh | null)[]>([]);
+  const portalRefs = useRef<(Mesh | null)[]>([null, null, null, null]);
 
   useFrame((state) => {
     const time = state.clock.elapsedTime;
@@ -21,7 +21,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
       centerOrbRef.current.position.y = Math.sin(time) * 0.2;
     }
 
-    // Animate portals - safely check if refs exist
+    // Animate portals
     portalRefs.current.forEach((portal, index) => {
       if (portal) {
         portal.rotation.y = time * 0.3 + index * 0.5;
@@ -32,12 +32,6 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
   const handlePortalClick = (portalType: string) => {
     console.log(`Portal clicked: ${portalType}`);
     onPortalClick?.(portalType);
-  };
-
-  const setPortalRef = (index: number) => (el: Mesh | null) => {
-    if (portalRefs.current) {
-      portalRefs.current[index] = el;
-    }
   };
 
   return (
@@ -70,7 +64,6 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
         color="#fbbf24"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/inter-bold.woff2"
       >
         Altarul Căutării
       </Text>
@@ -84,7 +77,11 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
       ].map((portal, index) => (
         <group key={portal.name} position={portal.position}>
           <Box 
-            ref={setPortalRef(index)}
+            ref={(el) => {
+              if (portalRefs.current) {
+                portalRefs.current[index] = el;
+              }
+            }}
             args={[2, 3, 0.5]}
             onClick={() => handlePortalClick(portal.name.toLowerCase().replace(/[^a-z]/g, ''))}
           >
@@ -102,7 +99,6 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
             color="white"
             anchorX="center"
             anchorY="middle"
-            font="/fonts/inter-bold.woff2"
           >
             {portal.name}
           </Text>
