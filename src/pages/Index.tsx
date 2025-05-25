@@ -7,6 +7,7 @@ import LoadingScreen from '@/components/LoadingScreen';
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [activePanel, setActivePanel] = useState<string | null>(null);
+  const [portalSearchQuery, setPortalSearchQuery] = useState<string>('');
 
   useEffect(() => {
     // Simulate initialization time
@@ -27,24 +28,26 @@ const Index = () => {
     switch (portalType) {
       case 'altarulcautarii':
       case 'search':
+        setPortalSearchQuery('');
         setActivePanel('search');
         break;
       case 'literaturaclasica':
-        // TODO: Implement predefined collection search
+        setPortalSearchQuery('literature fiction novel');
         setActivePanel('search');
         break;
       case 'stiintatehnologie':
-        // TODO: Implement science collection
+        setPortalSearchQuery('science technology physics mathematics');
         setActivePanel('search');
         break;
       case 'istoriefilozofie':
-        // TODO: Implement history collection
+        setPortalSearchQuery('history philosophy political science');
         setActivePanel('search');
         break;
       case 'colectiafavorite':
         setActivePanel('favorites');
         break;
       default:
+        setPortalSearchQuery('');
         setActivePanel('search');
     }
   };
@@ -59,6 +62,7 @@ const Index = () => {
           <UIOverlay 
             activePanel={activePanel} 
             onPanelChange={handlePanelChange}
+            portalSearchQuery={portalSearchQuery}
           />
         </>
       )}

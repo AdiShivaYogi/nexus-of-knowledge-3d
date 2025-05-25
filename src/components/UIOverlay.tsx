@@ -11,9 +11,10 @@ import SettingsPanel from './SettingsPanel';
 interface UIOverlayProps {
   activePanel: string | null;
   onPanelChange: (panel: string | null) => void;
+  portalSearchQuery?: string;
 }
 
-const UIOverlay: React.FC<UIOverlayProps> = ({ activePanel, onPanelChange }) => {
+const UIOverlay: React.FC<UIOverlayProps> = ({ activePanel, onPanelChange, portalSearchQuery = '' }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleQuickSearch = () => {
@@ -90,7 +91,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ activePanel, onPanelChange }) => 
             <Card className="mystical-glow">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="nexus-title">
-                  {activePanel === 'search' && 'Căutare în Arhiva Gutendex'}
+                  {activePanel === 'search' && 'Căutare în Arhiva Gutendx'}
                   {activePanel === 'favorites' && 'Colecția Ta de Favorite'}
                   {activePanel === 'settings' && 'Configurări Portal'}
                 </CardTitle>
@@ -99,7 +100,12 @@ const UIOverlay: React.FC<UIOverlayProps> = ({ activePanel, onPanelChange }) => 
                 </Button>
               </CardHeader>
               <CardContent className="max-h-[60vh] overflow-y-auto">
-                {activePanel === 'search' && <SearchPanel initialQuery={searchQuery} />}
+                {activePanel === 'search' && (
+                  <SearchPanel 
+                    initialQuery={portalSearchQuery || searchQuery} 
+                    portalType={portalSearchQuery ? 'portal' : 'manual'}
+                  />
+                )}
                 {activePanel === 'favorites' && <FavoritesPanel />}
                 {activePanel === 'settings' && <SettingsPanel />}
               </CardContent>
