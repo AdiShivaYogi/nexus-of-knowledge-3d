@@ -42,6 +42,16 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
     { name: "Colecția\nFavorite", position: new Vector3(6, 2, 6), color: "#f59e0b" }
   ];
 
+  // Generate floating particles with proper positions
+  const floatingParticles = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    position: new Vector3(
+      (Math.random() - 0.5) * 25,
+      Math.random() * 8 + 2,
+      (Math.random() - 0.5) * 25
+    )
+  }));
+
   return (
     <group>
       {/* Ground/Platform */}
@@ -109,15 +119,11 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
       ))}
 
       {/* Ambient floating particles */}
-      {Array.from({ length: 20 }).map((_, i) => (
+      {floatingParticles.map((particle) => (
         <Sphere
-          key={i}
+          key={particle.id}
           args={[0.05]}
-          position={[
-            (Math.random() - 0.5) * 25,
-            Math.random() * 8 + 2,
-            (Math.random() - 0.5) * 25
-          ]}
+          position={particle.position}
         >
           <meshStandardMaterial 
             color="#8b5cf6" 
