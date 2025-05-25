@@ -10,7 +10,7 @@ interface NexusHubProps {
 
 const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
   const centerOrbRef = useRef<Mesh>(null);
-  const portalRefs = useRef<Mesh[]>([]);
+  const portalRefs = useRef<(Mesh | null)[]>([]);
 
   useFrame((state) => {
     const time = state.clock.elapsedTime;
@@ -21,7 +21,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
       centerOrbRef.current.position.y = Math.sin(time) * 0.2;
     }
 
-    // Animate portals
+    // Animate portals - safely check if refs exist
     portalRefs.current.forEach((portal, index) => {
       if (portal) {
         portal.rotation.y = time * 0.3 + index * 0.5;
@@ -34,10 +34,16 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
     onPortalClick?.(portalType);
   };
 
+  const setPortalRef = (index: number) => (el: Mesh | null) => {
+    if (portalRefs.current) {
+      portalRefs.current[index] = el;
+    }
+  };
+
   return (
     <group>
       {/* Ground/Platform */}
-      <Cylinder args={[15, 15, 0.5]} position={[0, -0.25, 0] as [number, number, number]}>
+      <Cylinder args={[15, 15, 0.5]} position={[0, -0.25, 0]}>
         <meshStandardMaterial color="#1a1a2e" metalness={0.8} roughness={0.2} />
       </Cylinder>
 
@@ -45,7 +51,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
       <Sphere 
         ref={centerOrbRef}
         args={[1.5]} 
-        position={[0, 3, 0] as [number, number, number]}
+        position={[0, 3, 0]}
         onClick={() => handlePortalClick('search')}
       >
         <meshStandardMaterial 
@@ -59,7 +65,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
 
       {/* Search Portal Text */}
       <Text
-        position={[0, 5.5, 0] as [number, number, number]}
+        position={[0, 5.5, 0]}
         fontSize={0.5}
         color="#fbbf24"
         anchorX="center"
@@ -71,14 +77,14 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
 
       {/* Collection Portals */}
       {[
-        { name: "Literatură\nClasică", position: [-6, 2, -6] as [number, number, number], color: "#ef4444" },
-        { name: "Știință &\nTehnologie", position: [6, 2, -6] as [number, number, number], color: "#06b6d4" },
-        { name: "Istorie &\nFilozofie", position: [-6, 2, 6] as [number, number, number], color: "#84cc16" },
-        { name: "Colecția\nFavorite", position: [6, 2, 6] as [number, number, number], color: "#f59e0b" }
+        { name: "Literatură\nClasică", position: [-6, 2, -6], color: "#ef4444" },
+        { name: "Știință &\nTehnologie", position: [6, 2, -6], color: "#06b6d4" },
+        { name: "Istorie &\nFilozofie", position: [-6, 2, 6], color: "#84cc16" },
+        { name: "Colecția\nFavorite", position: [6, 2, 6], color: "#f59e0b" }
       ].map((portal, index) => (
         <group key={portal.name} position={portal.position}>
           <Box 
-            ref={(el) => el && (portalRefs.current[index] = el)}
+            ref={setPortalRef(index)}
             args={[2, 3, 0.5]}
             onClick={() => handlePortalClick(portal.name.toLowerCase().replace(/[^a-z]/g, ''))}
           >
@@ -91,7 +97,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
             />
           </Box>
           <Text
-            position={[0, 2, 0.3] as [number, number, number]}
+            position={[0, 2, 0.3]}
             fontSize={0.3}
             color="white"
             anchorX="center"
@@ -112,7 +118,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
             (Math.random() - 0.5) * 25,
             Math.random() * 8 + 2,
             (Math.random() - 0.5) * 25
-          ] as [number, number, number]}
+          ]}
         >
           <meshStandardMaterial 
             color="#8b5cf6" 
