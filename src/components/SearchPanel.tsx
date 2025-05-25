@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Book } from '../services/gutendxApi';
+import { Book } from '@/services/gutendxApi';
 import { useFavoriteBooks } from '@/hooks/useLocalStorage';
 import { useToast } from '@/hooks/use-toast';
 import SearchFiltersComponent, { SearchFilters } from './SearchFilters';

@@ -3,7 +3,7 @@ import { Download, Heart, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Book } from '../services/gutendxApi';
+import { Book } from '@/services/gutendxApi';
 
 interface BookDetailsViewProps {
   book: Book;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Book } from '../services/gutendxApi';
+import { Book } from '@/services/gutendxApi';
 
 interface BookCardProps {
   book: Book;

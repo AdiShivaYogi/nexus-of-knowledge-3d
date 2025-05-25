@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Book } from '../services/gutendxApi';
+import { Book } from '@/services/gutendxApi';
 import BookCard from './BookCard';
 
 interface SearchResultsProps {
