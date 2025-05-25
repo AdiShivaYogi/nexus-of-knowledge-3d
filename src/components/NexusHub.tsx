@@ -77,10 +77,10 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
 
       {/* Collection Portals */}
       {[
-        { name: "Literatură\nClasică", position: [-6, 2, -6], color: "#ef4444" },
-        { name: "Știință &\nTehnologie", position: [6, 2, -6], color: "#06b6d4" },
-        { name: "Istorie &\nFilozofie", position: [-6, 2, 6], color: "#84cc16" },
-        { name: "Colecția\nFavorite", position: [6, 2, 6], color: "#f59e0b" }
+        { name: "Literatură\nClasică", position: [-6, 2, -6] as [number, number, number], color: "#ef4444" },
+        { name: "Știință &\nTehnologie", position: [6, 2, -6] as [number, number, number], color: "#06b6d4" },
+        { name: "Istorie &\nFilozofie", position: [-6, 2, 6] as [number, number, number], color: "#84cc16" },
+        { name: "Colecția\nFavorite", position: [6, 2, 6] as [number, number, number], color: "#f59e0b" }
       ].map((portal, index) => (
         <group key={portal.name} position={portal.position}>
           <Box 
@@ -118,7 +118,7 @@ const NexusHub: React.FC<NexusHubProps> = ({ onPortalClick }) => {
             (Math.random() - 0.5) * 25,
             Math.random() * 8 + 2,
             (Math.random() - 0.5) * 25
-          ]}
+          ] as [number, number, number]}
         >
           <meshStandardMaterial 
             color="#8b5cf6" 
