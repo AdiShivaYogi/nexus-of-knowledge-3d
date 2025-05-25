@@ -31,7 +31,7 @@ const BookDetailsView: React.FC<BookDetailsViewProps> = ({
         type: format.includes('epub') ? 'EPUB' : 
               format.includes('pdf') ? 'PDF' :
               format.includes('html') ? 'HTML' : 'TXT',
-        url
+        url: url as string
       }));
     
     return formats;
